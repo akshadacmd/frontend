@@ -1,26 +1,20 @@
-import {BrowserRouter,Route,Routes} from "react-router-dom";
-import Login from "./Pages/auth/login";
-import Register from "./Pages/auth/register";
-import Birthday from "./Pages/auth/birthday";
-import ForgetPassword from "./Pages/auth/forgetpassword";
-import Home from "./Pages/auth/Home";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 
+import Login from "./Pages/auth/login";                
+import Register from "./Pages/auth/register";          
+import Home from "./Pages/auth/Home";                  
+import ForgotPassword from "./Pages/auth/forgetpassword"; 
 
-
-function App() {
+const App = () => {
   return (
-    <BrowserRouter>
-  <Routes>
-    <Route path="/"element={<Login/>}/>
-   <Route path="/register" element={<Register />} />
-   <Route path="/birthday" element={<Birthday />} />
-  <Route path="/forgetpassword" element={<ForgetPassword />} />
-  <Route path="/Home"element={<Home/>}/>
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/forgetpassword" element={<ForgotPassword />} />
     </Routes>
-    </BrowserRouter>
-   
-   
   );
-}
- 
+};
+
 export default App;
