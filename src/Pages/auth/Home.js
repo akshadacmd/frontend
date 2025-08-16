@@ -3,10 +3,12 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "./css/Home.css";
+import LogOutModel from "../../Components/ModelPopups/LogOutModel";
+
 const Home = () => {
   const [show, setShow] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [logoutModelShow, setLogoutModelShow] = useState(false);
 
   const navigate = useNavigate();
 
@@ -41,19 +43,24 @@ const Home = () => {
 
   useEffect(() => {
     getUserInfo();
-  },
-  // eslint-disable-next-line
-   []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("userToken");
-    setUserData(null);
-    navigate("/");
-  };
+  }, []);
 
   if (!userData) {
     return <p className="text-center mt-5">Loading...</p>;
   }
+
+  const openLogOutModelfunction = () => {
+    setLogoutModelShow(true);
+  };
+
+  const closeLogOutModel = () => {
+    setLogoutModelShow(false);
+  };
+
+  const confirmLogOut = () => {
+    localStorage.removeItem("userToken");
+    navigate("/");
+  };
 
   return (
     <div className="home-container py-5">
@@ -72,11 +79,10 @@ const Home = () => {
             <ul className="list-unstyled">
               <li><strong>Username:</strong> {userData?.userName}</li>
               <li><strong>Email:</strong> {userData?.email}</li>
-             
             </ul>
           </div>
           <div className="col-md-4 text-center text-md-end">
-            <button className="btn btn-danger my-1 w-100" onClick={handleLogout}>
+            <button className="btn btn-danger my-1 w-100" onClick={openLogOutModelfunction}>
               Log Out
             </button>
             <button className="btn btn-primary my-1 w-100" onClick={handleShow}>
@@ -128,13 +134,7 @@ const Home = () => {
       </div>
 
       {/* Edit Profile Modal */}
-      <Modal
-        show={show}
-        onHide={handleClose}
-        animation={false}
-        size="lg"
-        centered
-      >
+      <Modal show={show} onHide={handleClose} animation={false} size="lg" centered>
         <Modal.Header closeButton>
           <Modal.Title>Edit Profile</Modal.Title>
         </Modal.Header>
@@ -175,14 +175,17 @@ const Home = () => {
           </form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
+          <Button variant="secondary" onClick={handleClose}>Close</Button>
+          <Button variant="primary" onClick={handleClose}>Save Changes</Button>
         </Modal.Footer>
       </Modal>
+
+      {/* Logout Confirmation Modal */}
+      <LogOutModel
+        show={logoutModelShow}
+        handleClose={closeLogOutModel}
+        handleConfirm={confirmLogOut}
+      />
     </div>
   );
 };

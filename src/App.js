@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from "./Pages/auth/login";                
 import Register from "./Pages/auth/register";          
 import Home from "./Pages/auth/Home";                  
